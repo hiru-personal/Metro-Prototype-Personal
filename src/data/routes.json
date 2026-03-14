@@ -1,0 +1,29 @@
+[
+  {
+    "id": "red",
+    "name": { "en": "Red Line", "si": "රතු මාර්ගය", "ta": "சிவப்பு பாதை" },
+    "color": "#EF4444",
+    "stations": ["fort", "slave-island", "maradana", "dematagoda", "borella", "pettah"],
+    "frequency": "Every 8 minutes",
+    "operatingHours": { "start": "05:30", "end": "22:00" },
+    "farePerStation": 30
+  },
+  {
+    "id": "blue",
+    "name": { "en": "Blue Line", "si": "නිල් මාර්ගය", "ta": "நீல பாதை" },
+    "color": "#3B82F6",
+    "stations": ["fort", "slave-island", "kollupitiya", "bambalapitiya", "narahenpita", "wellawatte", "dehiwala"],
+    "frequency": "Every 10 minutes",
+    "operatingHours": { "start": "05:00", "end": "22:30" },
+    "farePerStation": 25
+  },
+  {
+    "id": "green",
+    "name": { "en": "Green Line", "si": "කොළ මාර්ගය", "ta": "பச்சை பாதை" },
+    "color": "#22C55E",
+    "stations": ["pettah", "borella", "narahenpita", "kirulapone", "nugegoda", "rajagiriya", "battaramulla"],
+    "frequency": "Every 12 minutes",
+    "operatingHours": { "start": "06:00", "end": "21:30" },
+    "farePerStation": 20
+  }
+]

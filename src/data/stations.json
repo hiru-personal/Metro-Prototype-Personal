@@ -1,0 +1,122 @@
+[
+  {
+    "id": "fort",
+    "name": { "en": "Fort", "si": "කොළඹ කොටුව", "ta": "கோட்டை" },
+    "latitude": 6.9340,
+    "longitude": 79.8428,
+    "routes": ["red", "blue"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": true }
+  },
+  {
+    "id": "maradana",
+    "name": { "en": "Maradana", "si": "මරදාන", "ta": "மருதானை" },
+    "latitude": 6.9289,
+    "longitude": 79.8637,
+    "routes": ["red"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": false }
+  },
+  {
+    "id": "pettah",
+    "name": { "en": "Pettah", "si": "පිට කොටුව", "ta": "பேட்டை" },
+    "latitude": 6.9380,
+    "longitude": 79.8515,
+    "routes": ["red", "green"],
+    "accessibility": { "wheelchair": true, "tactile": false, "elevator": true }
+  },
+  {
+    "id": "bambalapitiya",
+    "name": { "en": "Bambalapitiya", "si": "බම්බලපිටිය", "ta": "பம்பலப்பிட்டி" },
+    "latitude": 6.8930,
+    "longitude": 79.8556,
+    "routes": ["blue"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": true }
+  },
+  {
+    "id": "wellawatte",
+    "name": { "en": "Wellawatte", "si": "වැල්ලවත්ත", "ta": "வெள்ளவத்தை" },
+    "latitude": 6.8745,
+    "longitude": 79.8600,
+    "routes": ["blue"],
+    "accessibility": { "wheelchair": false, "tactile": true, "elevator": false }
+  },
+  {
+    "id": "dehiwala",
+    "name": { "en": "Dehiwala", "si": "දෙහිවල", "ta": "தெஹிவளை" },
+    "latitude": 6.8560,
+    "longitude": 79.8650,
+    "routes": ["blue"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": true }
+  },
+  {
+    "id": "nugegoda",
+    "name": { "en": "Nugegoda", "si": "නුගේගොඩ", "ta": "நுகேகொடை" },
+    "latitude": 6.8724,
+    "longitude": 79.8871,
+    "routes": ["green"],
+    "accessibility": { "wheelchair": true, "tactile": false, "elevator": false }
+  },
+  {
+    "id": "borella",
+    "name": { "en": "Borella", "si": "බොරැල්ල", "ta": "பொரெல்லா" },
+    "latitude": 6.9150,
+    "longitude": 79.8780,
+    "routes": ["red", "green"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": true }
+  },
+  {
+    "id": "rajagiriya",
+    "name": { "en": "Rajagiriya", "si": "රාජගිරිය", "ta": "ராஜகிரியா" },
+    "latitude": 6.9070,
+    "longitude": 79.8950,
+    "routes": ["green"],
+    "accessibility": { "wheelchair": false, "tactile": true, "elevator": false }
+  },
+  {
+    "id": "battaramulla",
+    "name": { "en": "Battaramulla", "si": "බත්තරමුල්ල", "ta": "பத்தரமுல்லை" },
+    "latitude": 6.9000,
+    "longitude": 79.9180,
+    "routes": ["green"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": true }
+  },
+  {
+    "id": "kollupitiya",
+    "name": { "en": "Kollupitiya", "si": "කොල්ලුපිටිය", "ta": "கொள்ளுப்பிட்டி" },
+    "latitude": 6.9110,
+    "longitude": 79.8490,
+    "routes": ["blue"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": true }
+  },
+  {
+    "id": "slave-island",
+    "name": { "en": "Slave Island", "si": "කොම්පඤ්ඤවීදිය", "ta": "சிலேவ் ஐலண்ட்" },
+    "latitude": 6.9240,
+    "longitude": 79.8480,
+    "routes": ["blue", "red"],
+    "accessibility": { "wheelchair": true, "tactile": false, "elevator": false }
+  },
+  {
+    "id": "dematagoda",
+    "name": { "en": "Dematagoda", "si": "දෙමටගොඩ", "ta": "தெமட்டகொடை" },
+    "latitude": 6.9340,
+    "longitude": 79.8770,
+    "routes": ["red"],
+    "accessibility": { "wheelchair": false, "tactile": true, "elevator": false }
+  },
+  {
+    "id": "narahenpita",
+    "name": { "en": "Narahenpita", "si": "නාරාහේන්පිට", "ta": "நாரஹேன்பிட்டா" },
+    "latitude": 6.8990,
+    "longitude": 79.8730,
+    "routes": ["green", "blue"],
+    "accessibility": { "wheelchair": true, "tactile": true, "elevator": false }
+  },
+  {
+    "id": "kirulapone",
+    "name": { "en": "Kirulapone", "si": "කිරුළපොන", "ta": "கிருலப்போன்" },
+    "latitude": 6.8855,
+    "longitude": 79.8700,
+    "routes": ["green"],
+    "accessibility": { "wheelchair": true, "tactile": false, "elevator": true }
+  }
+]

@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "Home",
+    "routeMap": "Route Map",
+    "journeyPlanner": "Journey Planner",
+    "busViewer": "Bus Viewer",
+    "language": "Language"
+  },
+  "home": {
+    "title": "SL Metro",
+    "subtitle": "Smart Transit for Sri Lanka",
+    "description": "Explore routes, plan your journey, and travel smarter with Colombo's modern metro bus system.",
+    "exploreRoutes": "Explore Routes",
+    "planJourney": "Plan Your Journey",
+    "viewBus": "View Bus Interior",
+    "features": {
+      "routeMap": "Interactive Route Map",
+      "routeMapDesc": "View all metro stations on an interactive map with real-time route information.",
+      "journeyPlanner": "Journey Planner",
+      "journeyPlannerDesc": "Plan your trip with smart route suggestions, fare estimates, and transfer info.",
+      "fareCalc": "Fare Calculator",
+      "fareCalcDesc": "Instant fare calculation in LKR with support for cash, card, and prepaid passes.",
+      "liveTracking": "Live Tracking",
+      "liveTrackingDesc": "Simulated real-time bus tracking with estimated arrival times.",
+      "busViewer": "360° Bus Viewer",
+      "busViewerDesc": "Explore the metro bus interior with our immersive panoramic viewer.",
+      "multiLang": "Multi-Language",
+      "multiLangDesc": "Available in English, Sinhala, and Tamil for all Sri Lankan commuters."
+    }
+  },
+  "routeMap": {
+    "title": "Interactive Route Map",
+    "subtitle": "Explore all metro stations and routes across Colombo",
+    "wheelchair": "Wheelchair Access",
+    "tactile": "Tactile Paving",
+    "elevator": "Elevator",
+    "routes": "Routes",
+    "accessibility": "Accessibility"
+  },
+  "journey": {
+    "title": "Journey Planner",
+    "subtitle": "Plan your metro journey across Colombo",
+    "from": "From Station",
+    "to": "To Station",
+    "fromPlaceholder": "Select origin station",
+    "toPlaceholder": "Select destination station",
+    "search": "Find Routes",
+    "results": "Available Routes",
+    "noResults": "No routes found between these stations.",
+    "travelTime": "Travel Time",
+    "transfers": "Transfers",
+    "stops": "Stops",
+    "fare": "Fare",
+    "minutes": "min",
+    "direct": "Direct",
+    "transfer": "transfer",
+    "paymentMethods": "Payment Methods",
+    "cash": "Cash",
+    "card": "Card",
+    "prepaid": "Prepaid Pass",
+    "sameStation": "Origin and destination cannot be the same.",
+    "selectBoth": "Please select both origin and destination stations.",
+    "loading": "Finding the best routes..."
+  },
+  "busViewer": {
+    "title": "360° Bus Interior",
+    "subtitle": "Explore the metro bus interior using our immersive panoramic viewer",
+    "dragToExplore": "Drag to look around • Scroll to zoom",
+    "hotspots": {
+      "lowFloor": "Low Floor Access",
+      "lowFloorDesc": "Step-free entry for wheelchair users and passengers with mobility needs.",
+      "ticketing": "Ticketing Machine",
+      "ticketingDesc": "Self-service kiosk supporting cash, card, and prepaid pass payments.",
+      "exitDoor": "Exit Doors",
+      "exitDoorDesc": "Wide automatic doors with safety sensors for smooth boarding."
+    }
+  },
+  "tracker": {
+    "arriving": "Arriving in",
+    "minutes": "minutes",
+    "simulated": "Simulated Data",
+    "nextBus": "Next Bus"
+  }
+}
