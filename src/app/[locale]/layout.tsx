@@ -1,8 +1,11 @@
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { Inter } from "next/font/google";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Navbar } from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,9 +30,19 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${inter.variable} font-sans antialiased`}>
         <NextIntlClientProvider locale={locale}>
-          <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+          <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+
+            {/* Navbar */}
             <Navbar />
-            <main>{children}</main>
+
+            {/* Page Content */}
+            <main className="flex-1">
+              {children}
+            </main>
+
+            {/* Footer */}
+            <Footer />
+
           </div>
         </NextIntlClientProvider>
       </body>

@@ -1,12 +1,38 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { Suspense, useState, useEffect, useMemo, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { getStations, findRoutes, getRoutes, type JourneyResult, type Station } from "@/lib/data-service";
 import { LiveTracker } from "@/components/LiveTracker";
 
 export default function JourneyPlannerPage() {
+  return (
+    <Suspense fallback={<JourneyPlannerFallback />}>
+      <JourneyPlannerContent />
+    </Suspense>
+  );
+}
+
+function JourneyPlannerFallback() {
+  return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+      <div className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-white/[0.02]">
+        <div className="space-y-3">
+          <div className="skeleton h-8 w-60" />
+          <div className="skeleton h-5 w-96 max-w-full" />
+          <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="skeleton h-12 w-full" />
+            <div className="skeleton h-12 w-full" />
+          </div>
+          <div className="skeleton h-11 w-44" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function JourneyPlannerContent() {
   const t = useTranslations("journey");
   const locale = useLocale() as "en" | "si" | "ta";
   const router = useRouter();
