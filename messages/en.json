@@ -70,6 +70,7 @@
     "fullscreen": "Fullscreen",
     "loading": "Loading 360 experience...",
     "failedLoad": "Unable to load the 360 view. Please refresh and try again.",
+    "reload": "Reload",
     "currentStatus": "Currently Viewing",
     "currentView": "Bus Exterior",
     "qualityNote": "Use full screen for a clearer and more realistic transport-station tour feel.",
