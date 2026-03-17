@@ -2,27 +2,56 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import "pannellum/build/pannellum.css";
+
+interface PannellumViewer {
+  on: (event: string, callback: (...args: unknown[]) => void) => PannellumViewer;
+  destroy: () => void;
+  stopAutoRotate: () => void;
+  startAutoRotate: (speed: number) => void;
+  setPitch: (pitch: number, duration?: number) => void;
+  setYaw: (yaw: number, duration?: number) => void;
+  setHfov: (hfov: number, duration?: number) => void;
+  toggleFullscreen: () => void;
+}
+
+interface PannellumWindow extends Window {
+  pannellum?: {
+    viewer: (container: HTMLElement, config: Record<string, unknown>) => PannellumViewer;
+  };
+}
 
 export default function BusViewerPage() {
   const t = useTranslations("busViewer");
-  const viewerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const viewerRef = useRef<PannellumViewer | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    let destroyed = false;
+
     const loadViewer = async () => {
       setIsLoading(true);
       setHasError(false);
 
-      if (viewerRef.current?.destroy) {
-        viewerRef.current.destroy();
-      }
-
-      const pannellum: any = await import("pannellum");
-
       try {
-        viewerRef.current = pannellum.viewer("panorama", {
+        // Import CSS and the viewer — pannellum's side effect sets window.pannellum
+        await import("pannellum/build/pannellum.css").catch(() => {});
+        await import("pannellum");
+
+        if (destroyed || !containerRef.current) return;
+
+        const pannellum = (window as PannellumWindow).pannellum;
+        if (!pannellum?.viewer) {
+          throw new Error("Pannellum viewer not available");
+        }
+
+        // Destroy any previously mounted viewer
+        if (viewerRef.current?.destroy) {
+          try { viewerRef.current.destroy(); } catch { /* viewer may already be in an invalid state */ }
+        }
+
+        viewerRef.current = pannellum.viewer(containerRef.current, {
           type: "equirectangular",
           panorama: "/bus360.jpg",
           autoLoad: true,
@@ -60,20 +89,35 @@ export default function BusViewerPage() {
             },
           ],
         });
-        setIsLoading(false);
+
+        viewerRef.current.on("load", () => {
+          if (!destroyed) setIsLoading(false);
+        });
+
+        viewerRef.current.on("error", () => {
+          if (!destroyed) {
+            setHasError(true);
+            setIsLoading(false);
+          }
+        });
       } catch {
-        setHasError(true);
-        setIsLoading(false);
+        if (!destroyed) {
+          setHasError(true);
+          setIsLoading(false);
+        }
       }
     };
 
     loadViewer();
+
     return () => {
+      destroyed = true;
       if (viewerRef.current?.destroy) {
-        viewerRef.current.destroy();
+        try { viewerRef.current.destroy(); } catch { /* viewer may already be in an invalid state during unmount */ }
+        viewerRef.current = null;
       }
     };
-  }, []);
+  }, [t]); // viewer is initialized once; t is stable within a locale context
 
   function resetView() {
     if (!viewerRef.current) return;
@@ -120,19 +164,30 @@ export default function BusViewerPage() {
         <div className="relative">
           {isLoading && (
             <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-slate-950/70 backdrop-blur-sm">
-              <p className="text-sm sm:text-base text-slate-200">{t("loading")}</p>
+              <div className="text-center">
+                <div className="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-4 border-cyan-400/30 border-t-cyan-400" />
+                <p className="text-sm sm:text-base text-slate-200">{t("loading")}</p>
+              </div>
             </div>
           )}
 
           {hasError && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-red-950/60">
-              <p className="px-4 text-center text-sm sm:text-base text-red-100">{t("failedLoad")}</p>
+            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-red-950/60 backdrop-blur-sm">
+              <div className="text-center px-4">
+                <p className="text-sm sm:text-base text-red-100">{t("failedLoad")}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-3 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+                >
+                  {t("reload")}
+                </button>
+              </div>
             </div>
           )}
 
           <div
-            id="panorama"
-            className="w-full h-[420px] sm:h-[560px] lg:h-[650px] rounded-2xl overflow-hidden border border-white/10"
+            ref={containerRef}
+            className="w-full h-[420px] sm:h-[560px] lg:h-[650px] rounded-2xl overflow-hidden border border-white/10 bg-slate-950"
           />
         </div>
       </section>
@@ -151,9 +206,9 @@ export default function BusViewerPage() {
             {t("hotspotTitle")}
           </p>
           <ul className="space-y-2 text-slate-200">
-            <li>{t("hotspots.lowFloor")}</li>
-            <li>{t("hotspots.ticketing")}</li>
-            <li>{t("hotspots.exitDoor")}</li>
+            <li>✓ {t("hotspots.lowFloor")}</li>
+            <li>✓ {t("hotspots.ticketing")}</li>
+            <li>✓ {t("hotspots.exitDoor")}</li>
           </ul>
         </article>
       </section>
