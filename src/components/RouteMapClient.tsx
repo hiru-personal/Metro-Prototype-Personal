@@ -3,7 +3,7 @@
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { getStations, getRoutes, type Station, type Route } from "@/lib/data-service";
+import { getStations, getRoutes, type Route } from "@/lib/data-service";
 import { useLocale, useTranslations } from "next-intl";
 
 function createStationIcon(routes: string[], allRoutes: Route[]) {
@@ -49,7 +49,7 @@ export default function RouteMapClient() {
   });
 
   return (
-    <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+    <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
       <MapContainer
         center={[6.9100, 79.8700]}
         zoom={13}
@@ -84,13 +84,13 @@ export default function RouteMapClient() {
           >
             <Popup>
               <div className="min-w-[200px]">
-                <h3 className="text-base font-bold text-white mb-2">
+                <h3 className="text-base font-bold text-slate-900 mb-2">
                   {station.name[locale]}
                 </h3>
 
                 {/* Routes */}
                 <div className="mb-3">
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">{t("routes")}</span>
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{t("routes")}</span>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {station.routes.map((rId) => {
                       const route = routes.find((r) => r.id === rId);
@@ -109,7 +109,7 @@ export default function RouteMapClient() {
 
                 {/* Accessibility */}
                 <div>
-                  <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">{t("accessibility")}</span>
+                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{t("accessibility")}</span>
                   <div className="flex gap-2 mt-1">
                     {station.accessibility.wheelchair && (
                       <span className="px-2 py-0.5 rounded text-xs bg-green-500/20 text-green-400" title={t("wheelchair")}>♿</span>

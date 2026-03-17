@@ -30,7 +30,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${inter.variable} font-sans antialiased`}>
         <NextIntlClientProvider locale={locale}>
-          <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+          <div className="app-shell min-h-screen flex flex-col bg-slate-50 text-slate-900 transition-colors duration-300">
 
             {/* Navbar */}
             <Navbar />

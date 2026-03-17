@@ -4,11 +4,44 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import "pannellum/build/pannellum.css";
 
+interface PannellumViewer {
+  destroy?: () => void;
+  stopAutoRotate: () => void;
+  setPitch: (pitch: number, duration?: number) => void;
+  setYaw: (yaw: number, duration?: number) => void;
+  setHfov: (hfov: number, duration?: number) => void;
+  startAutoRotate: (speed?: number) => void;
+  toggleFullscreen: () => void;
+}
+
+interface PannellumModule {
+  viewer: (elementId: string, config: unknown) => PannellumViewer;
+}
+
+const hotspots = [
+  {
+    id: "seating",
+    title: "Seating Information",
+    body: "Regular Seats: 200, Priority Seats: 40, Wheelchair Spaces: 4.",
+  },
+  {
+    id: "door",
+    title: "Door Mechanism",
+    body: "Pneumatic sliding doors with safety sensors and emergency manual override.",
+  },
+  {
+    id: "emergency",
+    title: "Emergency Exit",
+    body: "Four marked exit points with audio and visual alarm system.",
+  },
+];
+
 export default function BusViewerPage() {
   const t = useTranslations("busViewer");
-  const viewerRef = useRef<any>(null);
+  const viewerRef = useRef<PannellumViewer | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [openHotspot, setOpenHotspot] = useState<string>("seating");
 
   useEffect(() => {
     const loadViewer = async () => {
@@ -19,7 +52,7 @@ export default function BusViewerPage() {
         viewerRef.current.destroy();
       }
 
-      const pannellum: any = await import("pannellum");
+      const pannellum = (await import("pannellum")) as unknown as PannellumModule;
 
       try {
         viewerRef.current = pannellum.viewer("panorama", {
@@ -31,33 +64,15 @@ export default function BusViewerPage() {
           keyboardZoom: true,
           mouseZoom: true,
           draggable: true,
-          friction: 0.14,
           autoRotate: -2,
-          autoRotateInactivityDelay: 3500,
-          minHfov: 45,
-          maxHfov: 110,
+          autoRotateInactivityDelay: 3000,
           hfov: 88,
           pitch: 2,
           yaw: 5,
           hotSpots: [
-            {
-              pitch: -1,
-              yaw: 18,
-              type: "info",
-              text: t("hotspots.lowFloor"),
-            },
-            {
-              pitch: 3,
-              yaw: -28,
-              type: "info",
-              text: t("hotspots.ticketing"),
-            },
-            {
-              pitch: -4,
-              yaw: 95,
-              type: "info",
-              text: t("hotspots.exitDoor"),
-            },
+            { pitch: -1, yaw: 18, type: "info", text: t("hotspots.lowFloor") },
+            { pitch: 3, yaw: -28, type: "info", text: t("hotspots.ticketing") },
+            { pitch: -4, yaw: 95, type: "info", text: t("hotspots.exitDoor") },
           ],
         });
         setIsLoading(false);
@@ -73,7 +88,7 @@ export default function BusViewerPage() {
         viewerRef.current.destroy();
       }
     };
-  }, []);
+  }, [t]);
 
   function resetView() {
     if (!viewerRef.current) return;
@@ -90,71 +105,67 @@ export default function BusViewerPage() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-12">
-      <div className="mb-6">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-3 text-cyan-400">
-          {t("title")}
-        </h1>
-        <p className="text-slate-300">{t("subtitle")}</p>
-      </div>
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10">
+      <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">{t("title")}</h1>
 
-      <section className="rounded-3xl border border-white/15 bg-slate-900/50 backdrop-blur-sm p-3 sm:p-4 shadow-2xl shadow-cyan-950/20">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3">
-          <p className="text-sm sm:text-base font-medium text-cyan-300">{t("dragToExplore")}</p>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={resetView}
-              className="rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-xs sm:text-sm font-semibold text-cyan-200 hover:bg-cyan-400/20 transition-colors"
-            >
-              {t("resetView")}
-            </button>
-            <button
-              onClick={openFullscreen}
-              className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 transition-colors"
-            >
-              {t("fullscreen")}
-            </button>
+      <section className="relative rounded-xl overflow-hidden border border-slate-200 bg-gradient-to-br from-indigo-500 to-violet-600 p-3 shadow-sm mb-6">
+        <div className="rounded-lg bg-black/20 p-3 mb-3 flex items-center justify-between gap-3 text-white text-sm">
+          <p>{t("dragToExplore")}</p>
+          <div className="flex gap-2">
+            <button onClick={resetView} className="rounded-md border border-white/30 px-3 py-1.5 hover:bg-white/15">{t("resetView")}</button>
+            <button onClick={openFullscreen} className="rounded-md border border-white/30 px-3 py-1.5 hover:bg-white/15">{t("fullscreen")}</button>
           </div>
         </div>
 
         <div className="relative">
           {isLoading && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-slate-950/70 backdrop-blur-sm">
-              <p className="text-sm sm:text-base text-slate-200">{t("loading")}</p>
+            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-black/45 text-white">
+              {t("loading")}
             </div>
           )}
 
           {hasError && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-red-950/60">
-              <p className="px-4 text-center text-sm sm:text-base text-red-100">{t("failedLoad")}</p>
+            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-red-900/60 px-5 text-center text-white">
+              {t("failedLoad")}
             </div>
           )}
 
-          <div
-            id="panorama"
-            className="w-full h-[420px] sm:h-[560px] lg:h-[650px] rounded-2xl overflow-hidden border border-white/10"
-          />
+          <div id="panorama" className="h-[370px] sm:h-[520px] rounded-lg overflow-hidden border border-white/30" />
         </div>
       </section>
 
-      <section className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <p className="text-xs uppercase tracking-[0.14em] text-cyan-300 font-semibold mb-2">
-            {t("currentStatus")}
-          </p>
-          <h2 className="text-2xl font-bold text-white mb-1">{t("currentView")}</h2>
-          <p className="text-slate-300">{t("qualityNote")}</p>
+      <section className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+        <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="text-lg font-semibold text-slate-900 mb-3">Metro Coach Details</h2>
+          <ul className="space-y-2 text-sm text-slate-700">
+            <li>Model: M1 Coachyard 2024</li>
+            <li>Capacity: 280 passengers</li>
+            <li>Length: 26.5 meters</li>
+            <li>Features: Air conditioning, CCTV, USB charging, Wi-Fi, emergency communication.</li>
+          </ul>
         </article>
 
-        <article className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <p className="text-xs uppercase tracking-[0.14em] text-cyan-300 font-semibold mb-2">
-            {t("hotspotTitle")}
-          </p>
-          <ul className="space-y-2 text-slate-200">
-            <li>{t("hotspots.lowFloor")}</li>
-            <li>{t("hotspots.ticketing")}</li>
-            <li>{t("hotspots.exitDoor")}</li>
-          </ul>
+        <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="text-lg font-semibold text-slate-900 mb-3">Hotspots</h2>
+          <div className="space-y-2">
+            {hotspots.map((spot) => (
+              <div key={spot.id} className="rounded-lg border border-slate-200 overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenHotspot((prev) => (prev === spot.id ? "" : spot.id))}
+                  className={`w-full px-3 py-2 text-left text-sm font-semibold flex items-center justify-between ${
+                    openHotspot === spot.id ? "bg-blue-700 text-white" : "bg-slate-100 text-slate-900"
+                  }`}
+                >
+                  <span>{spot.title}</span>
+                  <span>{openHotspot === spot.id ? "▲" : "▼"}</span>
+                </button>
+                {openHotspot === spot.id && (
+                  <div className="px-3 py-3 text-sm text-slate-700 bg-white">{spot.body}</div>
+                )}
+              </div>
+            ))}
+          </div>
         </article>
       </section>
     </div>

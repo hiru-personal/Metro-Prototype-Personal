@@ -6,11 +6,8 @@ import { useTranslations } from "next-intl";
 export function LiveTracker() {
   const t = useTranslations("tracker");
   const [minutes, setMinutes] = useState(() => Math.floor(Math.random() * 12) + 3);
-  const [active, setActive] = useState(true);
 
   useEffect(() => {
-    if (!active) return;
-
     const interval = setInterval(() => {
       setMinutes((prev) => {
         if (prev <= 1) {
@@ -22,10 +19,10 @@ export function LiveTracker() {
     }, 15000); // Update every 15 seconds
 
     return () => clearInterval(interval);
-  }, [active]);
+  }, []);
 
   return (
-    <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20">
+    <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-emerald-50 to-cyan-50 border border-emerald-200">
       <div className="flex items-center gap-3">
         {/* Animated pulse */}
         <div className="relative flex items-center justify-center w-8 h-8">
@@ -34,7 +31,7 @@ export function LiveTracker() {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-white">
+            <span className="text-sm font-medium text-slate-800">
               {t("nextBus")}
             </span>
             <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">
@@ -54,7 +51,7 @@ export function LiveTracker() {
             key={i}
             className="w-1.5 h-4 rounded-full transition-all duration-500"
             style={{
-              backgroundColor: i < Math.ceil(minutes / 3) ? "#10b981" : "rgba(255,255,255,0.1)",
+              backgroundColor: i < Math.ceil(minutes / 3) ? "#10b981" : "#cbd5e1",
               animationDelay: `${i * 150}ms`,
             }}
           />

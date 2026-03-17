@@ -1,21 +1,21 @@
 export default function Footer() {
   return (
-    <footer className="bg-white/10 backdrop-blur-lg text-white mt-16 border-t border-white/20">
+    <footer className="mt-16 border-t border-slate-200 bg-slate-900 text-slate-100 app-footer">
       <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-8">
 
         {/* Left section */}
         <div>
-          <h2 className="text-xl font-bold mb-3">Metro Bus</h2>
-          <p className="text-sm text-gray-200">
+          <h2 className="text-xl font-bold mb-3">Sri Lanka Metro</h2>
+          <p className="text-sm text-slate-300">
             Modernizing public transportation in Sri Lanka.
-            Plan your journey, track buses in real-time,
+            Plan your journey, track trains in real-time,
             and travel with ease across the island.
           </p>
 
           <div className="flex gap-3 mt-4">
-            <span className="border rounded-full px-3 py-1">FB</span>
-            <span className="border rounded-full px-3 py-1">TW</span>
-            <span className="border rounded-full px-3 py-1">IG</span>
+            <span className="border border-slate-600 rounded-full px-3 py-1">FB</span>
+            <span className="border border-slate-600 rounded-full px-3 py-1">TW</span>
+            <span className="border border-slate-600 rounded-full px-3 py-1">IG</span>
           </div>
         </div>
 
@@ -25,9 +25,9 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li>Home</li>
             <li>Route Map</li>
-            <li>Fare Calculator</li>
+            <li>Journey Planner</li>
             <li>Live Tracking</li>
-            <li>Virtual Bus Tour</li>
+            <li>Virtual 360 Tour</li>
           </ul>
         </div>
 
@@ -44,8 +44,8 @@ export default function Footer() {
 
       </div>
 
-      <div className="border-t border-lightblue-500 text-center text-sm py-4">
-        © 2026 Sri Lanka Metro Bus. All rights reserved.
+      <div className="border-t border-slate-700 text-center text-sm py-4 text-slate-300">
+        © 2026 Sri Lanka Metro. All rights reserved.
       </div>
     </footer>
   );
