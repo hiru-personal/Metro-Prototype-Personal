@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Lanka Metro - Wireframe & Prototype</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066CC;
+            --secondary: #FF6B35;
+            --success: #28A745;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --dark: #212529;
+            --border: #DEE2E6;
+            --white: #FFFFFF;
+
+            --line-1: #E74C3C;
+            --line-2: #3498DB;
+            --line-3: #27AE60;
+            --line-4: #F39C12;
+
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        body.dark-mode {
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        /* ==================== HEADER ==================== */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        body.dark-mode header {
+            background: #2a2a2a;
+            border-bottom-color: #444;
+        }
+
+        .header-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            color: var(--secondary);
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex: 1;
+        }
+
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        body.dark-mode nav a {
+            color: var(--white);
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .language-switcher {
+            position: relative;
+        }
+
+        .lang-button {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .lang-button {
+            border-color: #444;
+            color: var(--white);
+        }
+
+        .lang-button:hover {
+            background: var(--light);
+            border-color: var(--primary);
+        }
+
+        body.dark-mode .lang-button:hover {
+            background: #333;
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-width: 120px;
+            margin-top: 8px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        body.dark-mode .lang-dropdown {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        .lang-dropdown.show {
+            display: flex;
+        }
+
+        .lang-dropdown button {
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        body.dark-mode .lang-dropdown button {
+            color: var(--white);
+        }
+
+        .lang-dropdown button:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        body.dark-mode .lang-dropdown button:hover {
+            background: #333;
+        }
+
+        .lang-dropdown button.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .hamburger span {
+            background: var(--white);
+        }
+
+        /* ==================== MOBILE MENU ==================== */
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                left: -100%;
+                top: 60px;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
+                padding: 20px 0;
+            }
+
+            body.dark-mode nav {
+                background: #2a2a2a;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav a {
+                display: block;
+                padding: 15px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            nav a.active::after {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .header-container {
+                padding: 12px 16px;
+                justify-content: space-between;
+            }
+
+            .header-actions {
+                gap: 12px;
+            }
+
+            .lang-dropdown {
+                right: -10px;
+            }
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        main {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #0052A3;
+            box-shadow: 0 4px 12px rgba(0,102,204,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #228138;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .btn-lg {
+            padding: 16px 32px;
+            font-size: 16px;
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* ==================== CARDS ==================== */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .card {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .card-header {
+            color: var(--white);
+        }
+
+        /* ==================== FORMS ==================== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        body.dark-mode label {
+            color: var(--white);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        body.dark-mode input,
+        body.dark-mode select,
+        body.dark-mode textarea {
+            background: #333;
+            border-color: #444;
+            color: var(--white);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        input.valid {
+            border-color: var(--success);
+        }
+
+        input.error {
+            border-color: var(--danger);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .success-message {
+            color: var(--success);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #0052A3 100%);
+            color: var(--white);
+            padding: 80px 24px;
+            border-radius: 16px;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 32px;
+            opacity: 0.95;
+        }
+
+        .hero .btn {
+            margin: 0 8px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+
+        /* ==================== GRID ==================== */
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                gap: 16px;
+            }
+
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ==================== ACTION CARDS ==================== */
+        .action-card {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .action-card {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        .action-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+        }
+
+        .action-card .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .action-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .action-card h3 {
+            color: var(--white);
+        }
+
+        .action-card p {
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+
+        /* ==================== JOURNEY CARD ==================== */
+        .journey-option {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .journey-option {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        .journey-option:hover {
+            border-color: var(--primary);
+        }
+
+        .journey-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .journey-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        body.dark-mode .journey-title {
+            color: var(--white);
+        }
+
+        .journey-tags {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--light);
+            color: var(--dark);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        body.dark-mode .tag {
+            background: #333;
+            color: var(--white);
+        }
+
+        .tag.fastest {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .tag.cheapest {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .journey-route {
+            background: var(--light);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        body.dark-mode .journey-route {
+            background: #333;
+            color: var(--white);
+        }
+
+        .route-step {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            gap: 12px;
+        }
+
+        .route-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .route-indicator.transfer {
+            background: var(--secondary);
+        }
+
+        /* ==================== STATION INFO ==================== */
+        .station-info {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        body.dark-mode .station-info {
+            background: #333;
+        }
+
+        .station-info h4 {
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .station-info h4 {
+            color: var(--white);
+        }
+
+        .facilities {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .facility {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--white);
+            border-radius: 20px;
+            font-size: 12px;
+            border: 1px solid var(--border);
+        }
+
+        body.dark-mode .facility {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        /* ==================== TABS ==================== */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-button:hover {
+            color: var(--dark);
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* ==================== TOGGLE ==================== */
+        .toggle-group {
+            display: flex;
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .toggle-item input[type="radio"],
+        .toggle-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        /* ==================== MODAL ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        body.dark-mode .modal-content {
+            background: #2a2a2a;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .modal-header {
+            color: var(--white);
+        }
+
+        /* ==================== PROGRESS ==================== */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        body.dark-mode .progress-bar {
+            background: #333;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        /* ==================== SKELETON ==================== */
+        .skeleton {
+            background: linear-gradient(90deg, var(--light) 25%, #e0e0e0 50%, var(--light) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .skeleton {
+            background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-text {
+            height: 16px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .skeleton-card {
+            height: 200px;
+            border-radius: 12px;
+        }
+
+        /* ==================== BADGE ==================== */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .badge-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        /* ==================== ALERT ==================== */
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-primary {
+            background: #E7F3FF;
+            color: var(--primary);
+            border: 1px solid #BFD9FF;
+        }
+
+        .alert-success {
+            background: #E8F5E9;
+            color: var(--success);
+            border: 1px solid #C3E6C3;
+        }
+
+        .alert-warning {
+            background: #FFF3CD;
+            color: #856404;
+            border: 1px solid #FFE69C;
+        }
+
+        .alert-danger {
+            background: #F8D7DA;
+            color: var(--danger);
+            border: 1px solid #F5C6CB;
+        }
+
+        body.dark-mode .alert-primary {
+            background: #1a3a52;
+        }
+
+        body.dark-mode .alert-success {
+            background: #1b3a1f;
+        }
+
+        body.dark-mode .alert-warning {
+            background: #3a3000;
+        }
+
+        body.dark-mode .alert-danger {
+            background: #3a1a1a;
+        }
+
+        /* ==================== ACCORDION ==================== */
+        .accordion {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        body.dark-mode .accordion {
+            border-color: #444;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        body.dark-mode .accordion-item {
+            border-bottom-color: #444;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            background: var(--light);
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        body.dark-mode .accordion-header {
+            background: #333;
+            color: var(--white);
+        }
+
+        .accordion-header:hover {
+            background: #E8E8E8;
+        }
+
+        body.dark-mode .accordion-header:hover {
+            background: #404040;
+        }
+
+        .accordion-header.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .accordion-body {
+            padding: 16px;
+            display: none;
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        body.dark-mode .accordion-body {
+            background: #2a2a2a;
+            color: var(--white);
+        }
+
+        .accordion-body.show {
+            display: block;
+        }
+
+        .accordion-icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* ==================== LOADER ==================== */
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 48px;
+        }
+
+        /* ==================== CAROUSEL ==================== */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, #0052A3 100%);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 300px;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .carousel-dot.active {
+            background: var(--white);
+        }
+
+        /* ==================== UTILITIES ==================== */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-24 {
+            margin-top: 24px;
+        }
+
+        .mb-24 {
+            margin-bottom: 24px;
+        }
+
+        .gap-24 {
+            gap: 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .col-6 {
+            flex: 1 1 calc(50% - 12px);
+            min-width: 300px;
+        }
+
+        @media (max-width: 768px) {
+            .col-6 {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* ==================== PAGES SPECIFIC ==================== */
+
+        /* ---- MAP PAGE ---- */
+        .map-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metro-map {
+            font-size: 14px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .line-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--white);
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .line-1 { background: var(--line-1); }
+        .line-2 { background: var(--line-2); }
+        .line-3 { background: var(--line-3); }
+        .line-4 { background: var(--line-4); }
+
+        .station-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+            justify-content: center;
+        }
+
+        .station-badge {
+            background: var(--white);
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        body.dark-mode .station-badge {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        .station-badge:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,102,204,0.2);
+        }
+
+        /* ---- TRACKING PAGE ---- */
+        .train-item {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .train-item {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        .train-item:hover {
+            border-color: var(--primary);
+        }
+
+        .train-status {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .train-info {
+            flex: 1;
+        }
+
+        .train-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+
+        body.dark-mode .train-name {
+            color: var(--white);
+        }
+
+        .train-details {
+            font-size: 12px;
+            color: var(--gray);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .occupancy-bar {
+            width: 100px;
+            height: 6px;
+            background: var(--light);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        body.dark-mode .occupancy-bar {
+            background: #333;
+        }
+
+        .occupancy-fill {
+            height: 100%;
+            background: var(--success);
+        }
+
+        /* ---- VIEWER PAGE ---- */
+        .viewer-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--white);
+            font-size: 18px;
+            position: relative;
+        }
+
+        .viewer-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .viewer-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .viewer-button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 40px 24px;
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            main {
+                padding: 16px;
+            }
+
+            .hero {
+                padding: 40px 16px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr !important;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .col-6 {
+                flex: 1 1 100% !important;
+            }
+
+            .map-container,
+            .viewer-container {
+                height: 350px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .modal-content {
+                padding: 24px;
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header>
+        <div class="header-container">
+            <div class="logo" onclick="navigateTo('home')">🚇 Sri Lanka Metro</div>
+            <nav id="nav-menu">
+                <a href="#" onclick="navigateTo('home'); return false;" class="nav-link active">Home</a>
+                <a href="#" onclick="navigateTo('planner'); return false;" class="nav-link">Planner</a>
+                <a href="#" onclick="navigateTo('map'); return false;" class="nav-link">Map</a>
+                <a href="#" onclick="navigateTo('fare'); return false;" class="nav-link">Fare</a>
+                <a href="#" onclick="navigateTo('viewer'); return false;" class="nav-link">360°</a>
+                <a href="#" onclick="navigateTo('tracking'); return false;" class="nav-link">Tracking</a>
+            </nav>
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <button class="lang-button" onclick="toggleLanguageDropdown()">
+                        <span id="lang-display">EN</span> ▼
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button onclick="changeLanguage('en')" class="active">English</button>
+                        <button onclick="changeLanguage('si')">Sinhala (සිංහල)</button>
+                        <button onclick="changeLanguage('ta')">Tamil (தமிழ்)</button>
+                    </div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main>
+        <!-- ========== PAGE 1: HOME ========== -->
+        <div class="page active" id="home">
+            <div class="hero">
+                <h1 id="hero-title">Welcome to Sri Lanka Metro</h1>
+                <p id="hero-subtitle">Plan your journey, explore routes, and travel with ease</p>
+                <button class="btn btn-primary btn-lg" onclick="navigateTo('planner')">
+                    📍 Plan Your Journey
+                </button>
+                <button class="btn btn-secondary btn-lg" onclick="navigateTo('map')">
+                    🗺️ Explore Map
+                </button>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="action-card" onclick="navigateTo('planner')">
+                    <div class="icon">📍</div>
+                    <h3>Find Route</h3>
+                    <p>Plan your journey between any two stations</p>
+                    <button class="btn btn-primary btn-sm">Go →</button>
+                </div>
+                <div class="action-card" onclick="navigateTo('fare')">
+                    <div class="icon">💰</div>
+                    <h3>Check Fare</h3>
+                    <p>Calculate ticket prices instantly in LKR</p>
+                    <button class="btn btn-primary btn-sm">Go →</button>
+                </div>
+                <div class="action-card" onclick="navigateTo('tracking')">
+                    <div class="icon">🔴</div>
+                    <h3>Live Tracking</h3>
+                    <p>Track real-time metro train positions</p>
+                    <button class="btn btn-primary btn-sm">Go →</button>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 48px; margin-bottom: 24px;">Featured Routes</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">Colombo Central → Negombo</div>
+                    <p style="margin-bottom: 12px;">Fast and direct route to the coastal city</p>
+                    <div class="station-info">
+                        <strong>Distance:</strong> 25 km<br>
+                        <strong>Stations:</strong> 12<br>
+                        <strong>Est. Time:</strong> 35 mins<br>
+                        <strong>Base Fare:</strong> LKR 125
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" onclick="navigateTo('planner')">
+                        View Details
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-header">Fort Station → Airport Express</div>
+                    <p style="margin-bottom: 12px;">Quick access to Bandaranaike International Airport</p>
+                    <div class="station-info">
+                        <strong>Distance:</strong> 34 km<br>
+                        <strong>Stations:</strong> 15<br>
+                        <strong>Est. Time:</strong> 45 mins<br>
+                        <strong>Base Fare:</strong> LKR 175
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" onclick="navigateTo('planner')">
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 2: JOURNEY PLANNER ========== -->
+        <div class="page" id="planner">
+            <h1 style="margin-bottom: 24px;">Journey Planner</h1>
+
+            <div class="grid grid-2 gap-24">
+                <div class="card">
+                    <div class="card-header">Enter Your Journey Details</div>
+                    <form id="planner-form">
+                        <div class="form-group">
+                            <label>From (Origin)</label>
+                            <input type="text" id="from-station" placeholder="Search station..." required>
+                            <div class="error-message" style="display: none;" id="from-error">Please select a valid station</div>
+                        </div>
+
+                        <div style="text-align: center; margin: 12px 0;">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="swapStations()">↕️ SWAP</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label>To (Destination)</label>
+                            <input type="text" id="to-station" placeholder="Search station..." required>
+                            <div class="error-message" style="display: none;" id="to-error">Please select a valid station</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date & Time</label>
+                            <div class="row" style="gap: 12px;">
+                                <input type="date" style="flex: 1;" id="travel-date" required>
+                                <input type="time" style="flex: 1;" id="travel-time" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Travel Options</label>
+                            <div class="toggle-group">
+                                <label class="toggle-item">
+                                    <input type="checkbox" id="fastest" checked>
+                                    ⚡ Fastest Route
+                                </label>
+                            </div>
+                            <div class="toggle-group">
+                                <label class="toggle-item">
+                                    <input type="checkbox" id="cheapest" checked>
+                                    💰 Cheapest Route
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 24px;" onclick="searchJourneys()">
+                            🔍 SEARCH ROUTES
+                        </button>
+                    </form>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 16px;">Route Results</h3>
+                    <div id="journey-results">
+                        <div style="text-align: center; color: var(--gray); padding: 40px;">
+                            <p>Enter journey details and click search to see available routes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 3: MAP ========== -->
+        <div class="page" id="map">
+            <h1 style="margin-bottom: 24px;">Interactive Metro Map</h1>
+
+            <div class="grid grid-2 gap-24">
+                <div class="map-container">
+                    <div class="metro-map">
+                        <h3>Metro System Map</h3>
+                        <div style="margin: 20px 0;">
+                            <div><span class="line-indicator line-1">Line 1 (Red)</span> Colombo Central - Negombo</div>
+                            <div><span class="line-indicator line-2">Line 2 (Blue)</span> Fort - Airport</div>
+                            <div><span class="line-indicator line-3">Line 3 (Green)</span> Kandy - Colombo</div>
+                            <div><span class="line-indicator line-4">Line 4 (Yellow)</span> Moratuwa - Galle</div>
+                        </div>
+                        <div class="station-list" id="station-list">
+                            <span class="station-badge" onclick="showStationInfo('colombo-central')">🚉 Colombo Central</span>
+                            <span class="station-badge" onclick="showStationInfo('fort')">🚉 Fort Station</span>
+                            <span class="station-badge" onclick="showStationInfo('nuwara')">🚉 Nuwara Eliya</span>
+                            <span class="station-badge" onclick="showStationInfo('kandy')">🚉 Kandy</span>
+                            <span class="station-badge" onclick="showStationInfo('negombo')">🚉 Negombo</span>
+                            <span class="station-badge" onclick="showStationInfo('airport')">🚉 Airport</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="card-header">Station Information</div>
+                        <div id="station-details">
+                            <p style="color: var(--gray); text-align: center; padding: 20px;">
+                                Click on a station to view details
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 16px;">
+                        <div class="card-header">Filters</div>
+                        <div class="form-group">
+                            <label>Show Lines:</label>
+                            <div class="toggle-group" style="flex-direction: column; gap: 8px;">
+                                <label class="toggle-item">
+                                    <input type="checkbox" checked> <span class="line-indicator line-1">Line 1</span>
+                                </label>
+                                <label class="toggle-item">
+                                    <input type="checkbox" checked> <span class="line-indicator line-2">Line 2</span>
+                                </label>
+                                <label class="toggle-item">
+                                    <input type="checkbox" checked> <span class="line-indicator line-3">Line 3</span>
+                                </label>
+                                <label class="toggle-item">
+                                    <input type="checkbox" checked> <span class="line-indicator line-4">Line 4</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 4: FARE CALCULATOR ========== -->
+        <div class="page" id="fare">
+            <h1 style="margin-bottom: 24px;">Fare Calculator</h1>
+
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <form id="fare-form">
+                    <div class="form-group">
+                        <label>From (Origin)</label>
+                        <select id="fare-from" required onchange="calculateFare()">
+                            <option value="">Select station...</option>
+                            <option value="colombo-central">Colombo Central</option>
+                            <option value="fort">Fort Station</option>
+                            <option value="nuwara">Nuwara Eliya</option>
+                            <option value="kandy">Kandy</option>
+                            <option value="negombo">Negombo</option>
+                            <option value="airport">Airport</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>To (Destination)</label>
+                        <select id="fare-to" required onchange="calculateFare()">
+                            <option value="">Select station...</option>
+                            <option value="colombo-central">Colombo Central</option>
+                            <option value="fort">Fort Station</option>
+                            <option value="nuwara">Nuwara Eliya</option>
+                            <option value="kandy">Kandy</option>
+                            <option value="negombo">Negombo</option>
+                            <option value="airport">Airport</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Passenger Type</label>
+                        <div class="toggle-group" style="flex-direction: column; gap: 8px;">
+                            <label class="toggle-item">
+                                <input type="radio" name="passenger-type" value="adult" checked onchange="calculateFare()">
+                                👤 Adult
+                            </label>
+                            <label class="toggle-item">
+                                <input type="radio" name="passenger-type" value="student" onchange="calculateFare()">
+                                🎓 Student (25% discount)
+                            </label>
+                            <label class="toggle-item">
+                                <input type="radio" name="passenger-type" value="senior" onchange="calculateFare()">
+                                👴 Senior (20% discount)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="decreaseQuantity()">−</button>
+                            <input type="number" id="quantity" value="1" min="1" max="10" readonly style="text-align: center; width: 60px;">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--light); padding: 20px; border-radius: 8px; margin: 24px 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Distance:</span>
+                            <strong id="fare-distance">—</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Base Fare:</span>
+                            <strong id="fare-base">—</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Distance Charge:</span>
+                            <strong id="fare-distance-charge">—</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Discount:</span>
+                            <strong id="fare-discount">—</strong>
+                        </div>
+                        <hr style="margin: 12px 0; border: none; border-top: 2px solid var(--border);">
+                        <div style="display: flex; justify-content: space-between; font-size: 18px;">
+                            <strong>TOTAL FARE:</strong>
+                            <strong style="color: var(--primary); font-size: 20px;" id="fare-total">LKR 0</strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <div class="toggle-group" style="flex-direction: column; gap: 8px;">
+                            <label class="toggle-item">
+                                <input type="radio" name="payment" value="card" checked>
+                                💳 Credit/Debit Card
+                            </label>
+                            <label class="toggle-item">
+                                <input type="radio" name="payment" value="wallet">
+                                📱 Mobile Wallet
+                            </label>
+                            <label class="toggle-item">
+                                <input type="radio" name="payment" value="rfid">
+                                🎫 RFID Card
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 24px;" onclick="proceedToPayment()">
+                        💳 CONTINUE TO PAYMENT
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 5: 360 VIEWER ========== -->
+        <div class="page" id="viewer">
+            <h1 style="margin-bottom: 24px;">360° Metro Interior Viewer</h1>
+
+            <div class="viewer-container">
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">🚇</div>
+                    <div style="font-size: 18px; margin-bottom: 20px;">Metro Coach Interior</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Drag to pan • Scroll to zoom • Click hotspots for info</div>
+                </div>
+                <div class="viewer-controls">
+                    <button class="viewer-button" title="Zoom In">⊕</button>
+                    <button class="viewer-button" title="Zoom Out">⊖</button>
+                    <button class="viewer-button" title="Reset">↺</button>
+                    <button class="viewer-button" title="Sound">🔊</button>
+                </div>
+            </div>
+
+            <div class="grid grid-2 gap-24">
+                <div class="card">
+                    <div class="card-header">Metro Coach Details</div>
+                    <div>
+                        <strong>Model:</strong> M1 Coachyard 2024<br>
+                        <strong>Capacity:</strong> 280 passengers<br>
+                        <strong>Length:</strong> 26.5 meters<br><br>
+                        <strong>Features:</strong>
+                        <ul style="margin-top: 8px; margin-left: 16px;">
+                            <li>✓ Air Conditioning</li>
+                            <li>✓ Wheelchair Accessible</li>
+                            <li>✓ CCTV Monitoring</li>
+                            <li>✓ USB Charging Points</li>
+                            <li>✓ Wi-Fi Availability</li>
+                            <li>✓ Real-time Digital Display</li>
+                            <li>✓ Emergency Communication System</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="card-header">Hotspots</div>
+                        <div class="accordion">
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">
+                                    🪑 Seating Information
+                                    <span class="accordion-icon">▼</span>
+                                </button>
+                                <div class="accordion-body">
+                                    <p><strong>Regular Seats:</strong> 200</p>
+                                    <p><strong>Priority Seats:</strong> 40</p>
+                                    <p><strong>Wheelchair Spaces:</strong> 4</p>
+                                    <p style="margin-top: 12px; color: var(--gray);">Priority seating for elderly, disabled, and pregnant women.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">
+                                    🚪 Door Mechanism
+                                    <span class="accordion-icon">▼</span>
+                                </button>
+                                <div class="accordion-body">
+                                    <p><strong>Door Type:</strong> Pneumatic Sliding</p>
+                                    <p><strong>Width:</strong> 1.3 meters</p>
+                                    <p><strong>Auto Close Time:</strong> 3 seconds</p>
+                                    <p style="margin-top: 12px; color: var(--gray);">Automatic with emergency manual override.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header" onclick="toggleAccordion(this)">
+                                    🆘 Emergency Exit
+                                    <span class="accordion-icon">▼</span>
+                                </button>
+                                <div class="accordion-body">
+                                    <p><strong>Exit Points:</strong> 4</p>
+                                    <p><strong>Evacuation Time:</strong> &lt; 2 minutes</p>
+                                    <p><strong>Alarm System:</strong> Audio & Visual</p>
+                                    <p style="margin-top: 12px; color: var(--gray);">All emergency exits clearly marked and regularly tested.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 16px;">
+                        <div class="card-header">Select View</div>
+                        <div class="carousel">
+                            <div class="carousel-controls">
+                                <button class="carousel-dot active" onclick="changeCarousel(0)"></button>
+                                <button class="carousel-dot" onclick="changeCarousel(1)"></button>
+                                <button class="carousel-dot" onclick="changeCarousel(2)"></button>
+                            </div>
+                        </div>
+                        <div style="margin-top: 12px;">
+                            <button class="btn btn-secondary" style="width: 100%; margin-bottom: 8px;">Coach Interior</button>
+                            <button class="btn btn-secondary" style="width: 100%; margin-bottom: 8px;">Station Hall</button>
+                            <button class="btn btn-secondary" style="width: 100%;">Platform Area</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 6: TRACKING ========== -->
+        <div class="page" id="tracking">
+            <h1 style="margin-bottom: 24px;">🔴 Live Tracking</h1>
+
+            <div class="alert alert-primary" style="margin-bottom: 24px;">
+                <span>ℹ️</span>
+                <span>Last Updated: <strong id="update-time">10:45:23 AM</strong> • Auto-refresh: <strong>ON</strong></span>
+            </div>
+
+            <div class="grid grid-2 gap-24">
+                <div class="map-container" style="height: 400px;">
+                    <div style="text-align: center; color: var(--white);">
+                        <div style="font-size: 18px; margin-bottom: 20px;">🗺️ Metro System Map with Live Trains</div>
+                        <div style="font-size: 14px; opacity: 0.9;">Showing active train positions in real-time</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 16px;">Active Trains</h3>
+                    <div id="train-list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <p>&copy; 2026 Sri Lanka Metro Web System. All rights reserved.</p>
+        <p style="margin-top: 12px; font-size: 14px;">
+            <a href="#">About Us</a> • <a href="#">Privacy</a> • <a href="#">Terms</a> • <a href="#">Contact</a>
+        </p>
+    </footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // ==================== LANGUAGE SYSTEM ====================
+        const translations = {
+            en: {
+                'hero-title': 'Welcome to Sri Lanka Metro',
+                'hero-subtitle': 'Plan your journey, explore routes, and travel with ease'
+            },
+            si: {
+                'hero-title': 'ශ්‍රී ලංකා මෙට්‍රෝ වෙත සාදරයෙන් පිළිගනිමු',
+                'hero-subtitle': 'ඔබේ ගමන සැලසුම් කරන්න, මාර්ග ගවේෂණ කරන්න සහ පහසුවෙන් ගමන් කරන්න'
+            },
+            ta: {
+                'hero-title': 'இலங்கை மெட்ரோக்கு வரவேற்கிறோம்',
+                'hero-subtitle': 'உங்கள் பயணத்தைத் திட்டமிடுங்கள், வழிகளை ஆராயுங்கள் மற்றும் எளிதாக பயணம் செய்யுங்கள்'
+            }
+        };
+
+        let currentLanguage = 'en';
+        let currentPage = 'home';
+        let isDarkMode = false;
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('lang-display').textContent = lang.toUpperCase();
+            
+            // Update translations
+            if (translations[lang]) {
+                Object.keys(translations[lang]).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.textContent = translations[lang][key];
+                    }
+                });
+            }
+
+            // Close dropdown
+            document.getElementById('lang-dropdown').classList.remove('show');
+            
+            // Update active button
+            document.querySelectorAll('.lang-dropdown button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function toggleLanguageDropdown() {
+            document.getElementById('lang-dropdown').classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.language-switcher')) {
+                document.getElementById('lang-dropdown').classList.remove('show');
+            }
+        });
+
+        // ==================== THEME SYSTEM ====================
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('.theme-toggle').textContent = isDarkMode ? '☀️' : '🌙';
+        }
+
+        // ==================== NAVIGATION ====================
+        function navigateTo(page) {
+            currentPage = page;
+            
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(page).classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            event.target.closest('.nav-link')?.classList.add('active');
+            
+            // Close mobile menu
+            document.getElementById('nav-menu').classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // ==================== MOBILE MENU ====================
+        function toggleMobileMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+
+        // ==================== PLANNER FUNCTIONALITY ====================
+        const stationsData = {
+            'colombo-central': { name: 'Colombo Central', zone: 1 },
+            'fort': { name: 'Fort Station', zone: 1 },
+            'nuwara': { name: 'Nuwara Eliya', zone: 2 },
+            'kandy': { name: 'Kandy', zone: 2 },
+            'negombo': { name: 'Negombo', zone: 3 },
+            'airport': { name: 'Airport', zone: 3 }
+        };
+
+        function swapStations() {
+            const from = document.getElementById('from-station');
+            const to = document.getElementById('to-station');
+            [from.value, to.value] = [to.value, from.value];
+        }
+
+        function searchJourneys() {
+            const from = document.getElementById('from-station').value;
+            const to = document.getElementById('to-station').value;
+
+            if (!from || !to) {
+                alert('Please fill in both stations');
+                return;
+            }
+
+            const journeys = [
+                {
+                    name: 'Fastest Route',
+                    time: '35 mins',
+                    fare: 'LKR 125',
+                    transfers: 1,
+                    fastest: true
+                },
+                {
+                    name: 'Cheapest Route',
+                    time: '42 mins',
+                    fare: 'LKR 95',
+                    transfers: 2,
+                    cheapest: true
+                }
+            ];
+
+            const html = journeys.map(j => `
+                <div class="journey-option">
+                    <div class="journey-header">
+                        <div class="journey-title">${from} → ${to}</div>
+                        <div class="journey-tags">
+                            ${j.fastest ? '<span class="tag fastest">⚡ Fastest</span>' : ''}
+                            ${j.cheapest ? '<span class="tag cheapest">💰 Cheapest</span>' : ''}
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span>⏱️ ${j.time}</span>
+                        <span>💵 ${j.fare}</span>
+                        <span>🔄 ${j.transfers} Transfer${j.transfers > 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="journey-route">
+                        <div class="route-step">
+                            <span class="route-indicator">1</span>
+                            <span>10:30 - ${from}</span>
+                        </div>
+                        <div class="route-step">
+                            <span class="route-indicator transfer">2</span>
+                            <span>10:55 - Main Junction (Transfer)</span>
+                        </div>
+                        <div class="route-step">
+                            <span class="route-indicator">3</span>
+                            <span>11:05 - ${to}</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-secondary btn-sm">View on Map</button>
+                        <button class="btn btn-primary btn-sm" onclick="showModal('booking')">Book Now</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('journey-results').innerHTML = html;
+        }
+
+        // ==================== MAP FUNCTIONALITY ====================
+        function showStationInfo(stationId) {
+            const station = stationsData[stationId];
+            const html = `
+                <div class="station-info">
+                    <h4>${station.name}</h4>
+                    <p><strong>Zone:</strong> ${station.zone}</p>
+                    <p><strong>Line:</strong> Line ${station.zone} (${['Red', 'Blue', 'Green'][station.zone - 1]})</p>
+                </div>
+                <h4 style="margin-top: 16px;">Facilities:</h4>
+                <div class="facilities">
+                    <span class="facility">🅿 Parking</span>
+                    <span class="facility">♿ Accessible</span>
+                    <span class="facility">🍕 Food Court</span>
+                    <span class="facility">💷 ATM</span>
+                    <span class="facility">🚻 Restroom</span>
+                    <span class="facility">📞 Help Desk</span>
+                </div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-primary btn-sm" onclick="navigateTo('planner')">Plan Route</button>
+                </div>
+            `;
+            document.getElementById('station-details').innerHTML = html;
+        }
+
+        // ==================== FARE CALCULATOR ====================
+        function calculateFare() {
+            const from = document.getElementById('fare-from').value;
+            const to = document.getElementById('fare-to').value;
+            const passengerType = document.querySelector('input[name="passenger-type"]:checked').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+
+            if (!from || !to) {
+                document.getElementById('fare-total').textContent = 'LKR 0';
+                return;
+            }
+
+            const baseMap = {
+                'colombo-central_negombo': 125,
+                'colombo-central_fort': 50,
+                'fort_airport': 150,
+                'kandy_colombo-central': 200
+            };
+
+            const key = `${from}_${to}` || `${to}_${from}`;
+            let baseFare = baseMap[key] || 100;
+            let discount = 0;
+
+            if (passengerType === 'student') discount = baseFare * 0.25;
+            if (passengerType === 'senior') discount = baseFare * 0.20;
+
+            const totalPerPassenger = baseFare - discount;
+            const total = totalPerPassenger * quantity;
+
+            document.getElementById('fare-distance').textContent = '25 km';
+            document.getElementById('fare-base').textContent = `LKR ${baseFare}`;
+            document.getElementById('fare-distance-charge').textContent = 'LKR 0';
+            document.getElementById('fare-discount').textContent = discount > 0 ? `-LKR ${Math.round(discount)}` : 'None';
+            document.getElementById('fare-total').textContent = `LKR ${Math.round(total)}`;
+        }
+
+        function increaseQuantity() {
+            const qty = document.getElementById('quantity');
+            if (qty.value < 10) {
+                qty.value = parseInt(qty.value) + 1;
+                calculateFare();
+            }
+        }
+
+        function decreaseQuantity() {
+            const qty = document.getElementById('quantity');
+            if (qty.value > 1) {
+                qty.value = parseInt(qty.value) - 1;
+                calculateFare();
+            }
+        }
+
+        function proceedToPayment() {
+            const total = document.getElementById('fare-total').textContent;
+            alert(`Proceeding to payment: ${total}\n\nThis is a wireframe demo.`);
+        }
+
+        // ==================== ACCORDION ====================
+        function toggleAccordion(button) {
+            button.classList.toggle('active');
+            const body = button.nextElementSibling;
+            body.classList.toggle('show');
+        }
+
+        // ==================== CAROUSEL ====================
+        function changeCarousel(index) {
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // ==================== TRACKING ====================
+        function updateTrackingData() {
+            const trains = [
+                { id: 'TR01', line: 1, at: 'Fort', next: 'Nuwara', eta: '3 mins', occupancy: 75 },
+                { id: 'TR02', line: 1, at: 'Kelaniya', next: 'Negombo', eta: '7 mins', occupancy: 45 },
+                { id: 'TR03', line: 2, at: 'Main Junction', next: 'Airport', eta: '5 mins', occupancy: 85 }
+            ];
+
+            const lineColors = ['var(--line-1)', 'var(--line-2)', 'var(--line-3)'];
+            
+            const html = trains.map((train, idx) => `
+                <div class="train-item">
+                    <div class="train-status" style="background: ${lineColors[train.line - 1]};">
+                        ${train.line}
+                    </div>
+                    <div class="train-info">
+                        <div class="train-name">Train ${train.id} - Line ${train.line}</div>
+                        <div class="train-details">
+                            <span>At: ${train.at}</span>
+                            <span>Next: ${train.next}</span>
+                            <span>ETA: ${train.eta}</span>
+                            <span>Occupancy: ${train.occupancy}%</span>
+                        </div>
+                        <div class="occupancy-bar" style="margin-top: 8px;">
+                            <div class="occupancy-fill" style="width: ${train.occupancy}%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm">Details →</button>
+                </div>
+            `).join('');
+
+            document.getElementById('train-list').innerHTML = html;
+            
+            // Update time
+            const now = new Date();
+            document.getElementById('update-time').textContent = now.toLocaleTimeString();
+        }
+
+        // Update tracking every 5 seconds when on tracking page
+        setInterval(() => {
+            if (currentPage === 'tracking') {
+                updateTrackingData();
+            }
+        }, 5000);
+
+        // ==================== MODAL ====================
+        function showModal(type) {
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-close" onclick="this.closest('.modal').remove()">×</button>
+                    <div class="modal-header">Booking Confirmation</div>
+                    <p>Route booked successfully!</p>
+                    <p style="margin-top: 12px; color: var(--gray);">This is a wireframe demo.</p>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="this.closest('.modal').remove()">
+                        Close
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // ==================== INITIALIZATION ====================
+        // Set default date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('travel-date').value = today;
+        document.getElementById('travel-time').value = '10:30';
+
+        // Initial tracking data
+        updateTrackingData();
+
+        // Close modals on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(m => m.remove());
+            }
+        });
+    </script>
+</body>
+</html>
